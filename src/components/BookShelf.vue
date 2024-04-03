@@ -1,4 +1,12 @@
 <script setup>
+import { getBooks } from '@/api';
+import { onMounted } from 'vue';
+
+onMounted(() => {
+  getBooks().then(res => {
+    console.log(res)
+  })
+})
 </script>
 
 <template>
