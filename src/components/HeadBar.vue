@@ -1,9 +1,13 @@
 <script setup>
-import Headbar from '@/components/HeadBar.vue'
+
 </script>
 
 <template>
   <div>
-    <Headbar/>
+    head bar
   </div>
 </template>
+
+<style scoped>
+
+</style>
