@@ -17,12 +17,15 @@
 
 <script setup>
 import { getBooks } from '@/api';
-import { onMounted } from 'vue';
-
-onMounted(() => {
+import { onMounted, ref } from 'vue';
+const books = ref([])
+const queryBooks = () => {
   getBooks().then(res => {
     console.log(res)
   })
+}
+onMounted(() => {
+  queryBooks()
 })
 </script>
 
