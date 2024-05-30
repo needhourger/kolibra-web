@@ -10,7 +10,7 @@ const instance = axios.create({
 })
 
 const request = {
-  $get: (url, params) => {
+  get: (url, params) => {
     return new Promise((resolve, reject) => {
       QS.stringify(params)
       instance.get(url, params).then(res => {
@@ -22,7 +22,7 @@ const request = {
       })
     })
   },
-  $post: (url, params, config) => {
+  post: (url, params, config) => {
     return new Promise((resolve,reject) => {
       QS.stringify(params)
       instance.post(url, params, config).then(res => {
@@ -34,7 +34,7 @@ const request = {
       })
     })
   },
-  $put: (url, params, config) => {
+  put: (url, params, config) => {
     return new Promise((resolve, reject) => {
       instance.put(url, params, config).then(res => {
         resolve(res.data)
@@ -45,7 +45,7 @@ const request = {
       })
     })
   },
-  $delete: (url, params) => {
+  delete: (url, params) => {
     return new Promise((resolve, reject) => {
       instance.delete(url, { ...params }).then(res => {
         resolve(res.data)
