@@ -4,9 +4,11 @@
       <el-col class="book-box"
         v-for="book,bindex in books" :key="bindex"
         :xs="8" :sm="6" :md="4" :lg="3">
-        <el-card shadow="hover">
-          <div>{{ book.Title }}</div>
-        </el-card>
+        <router-link :to="`/book/${book.ID}`">
+          <el-card shadow="hover">
+            <div>{{ book.Title }}</div>
+          </el-card>
+        </router-link>
       </el-col>
     </el-row>
   </div>
@@ -41,13 +43,13 @@ onMounted(() => {
 <style scoped lang="less">
 .bookshelf {
   padding: 20px 40px;
-
-  .book-box {
-    height: 200px;
-    .el-card {
-      height: 100%;
-      width: 100%;
-    }
+}
+.book-box {
+  height: 200px;
+  text-decoration: none;
+  .el-card {
+    height: 100%;
+    width: 100%;
   }
 }
 </style>
