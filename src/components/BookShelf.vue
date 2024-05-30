@@ -6,7 +6,7 @@
         :xs="8" :sm="6" :md="4" :lg="3">
         <router-link :to="`/book/${book.ID}`">
           <el-card shadow="hover">
-            <div>{{ book.Title }}</div>
+            <div class="text-2xl">{{ book.Title }}</div>
           </el-card>
         </router-link>
       </el-col>
