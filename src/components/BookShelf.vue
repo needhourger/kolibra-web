@@ -1,14 +1,3 @@
-<script setup>
-import { getBooks } from '@/api';
-import { onMounted } from 'vue';
-
-onMounted(() => {
-  getBooks().then(res => {
-    console.log(res)
-  })
-})
-</script>
-
 <template>
   <div class="bookshelf">
     <el-row :gutter="20">
@@ -25,6 +14,17 @@ onMounted(() => {
     </el-row>
   </div>
 </template>
+
+<script setup>
+import { getBooks } from '@/api';
+import { onMounted } from 'vue';
+
+onMounted(() => {
+  getBooks().then(res => {
+    console.log(res)
+  })
+})
+</script>
 
 <style scoped lang="less">
 .bookshelf {

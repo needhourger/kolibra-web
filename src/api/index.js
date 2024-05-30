@@ -1,5 +1,5 @@
 import request from "./request"
 
 export const getBooks = () => {
-  return request.$get('books')
+  return request.get('books')
 }

@@ -1,12 +1,14 @@
-<script setup>
 
-</script>
 
 <template>
   <div class="header">
     <div class="title">Kolibra</div>
   </div>
 </template>
+
+<script setup>
+
+</script>
 
 <style scoped>
 .header {
