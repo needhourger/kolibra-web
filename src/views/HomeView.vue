@@ -1,12 +1,12 @@
 <template>
   <div>
-    <Headbar/>
+    <HeadBar/>
     <router-view></router-view>
   </div>
 </template>
 
 <script setup>
-import Headbar from '@/components/HeadBar.vue'
+import HeadBar from '@/components/HeadBar.vue'
 </script>
 
 
