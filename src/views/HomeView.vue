@@ -1,13 +1,12 @@
 <template>
   <div>
     <Headbar/>
-    <BookShelf/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script setup>
 import Headbar from '@/components/HeadBar.vue'
-import BookShelf from "@/components/BookShelf.vue"
 </script>
 
 
