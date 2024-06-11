@@ -11,3 +11,11 @@ export const getBookChaptersById = (bid) => {
   const url = `/books/${bid}/chapters`
   return request.get(url)
 }
+export const getBookChapterById = (params) => {
+  const url = `/books/${params.bookId}/chapters/${params.chapterId}`
+  return request.get(url)
+}
+export const getBookChapterContent = (params) => {
+  const url = `/books/${params.bookId}/chapters/${params.chapterId}/content`
+  return request.get(url)
+}

@@ -6,7 +6,7 @@
     <h1 class="text-3xl font-bold">Chapters</h1>
     <el-row :gutter="12" v-if="bookInfo">
       <el-col :span="8" v-for="chapter, cindex in chapters" :key="cindex">
-        <RouterLink :to="`/${bookInfo.Extension.replace(/^\.*/,'')}/read/${chapter.ID}`">
+        <RouterLink :to="`/reader/${bookId}/${chapter.ID}`">
           <h2>{{ chapter.Title }}</h2>
         </RouterLink>
       </el-col>
