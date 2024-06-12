@@ -2,12 +2,19 @@
 
 <template>
   <div class="header">
-    <div class="title">Kolibra</div>
+    <RouterLink class="title" :to="{ name: 'Bookshelf' }">Kolibra</RouterLink>
+    <el-button plain size="large" class="w-32 font-xl font-bold" @click="handleScan">Scan</el-button>
   </div>
 </template>
 
 <script setup>
+import { requestScanLibrary } from '@/api';
 
+const handleScan = () => {
+  requestScanLibrary().then(res => {
+    console.log(res)
+  })
+}
 </script>
 
 <style scoped>
@@ -16,6 +23,7 @@
   display: flex;
   padding: 10px;
   align-items: center;
+  justify-content: space-between;
   box-shadow: 0 2px 5px 3px #f0f0f0;
   .title {
     font-family: 'Silkscreen';

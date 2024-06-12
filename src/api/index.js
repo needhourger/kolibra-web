@@ -19,3 +19,7 @@ export const getBookChapterContent = (params) => {
   const url = `/books/${params.bookId}/chapters/${params.chapterId}/content`
   return request.get(url)
 }
+export const requestScanLibrary = () => {
+  const url = '/library/scan'
+  return request.get(url)
+}
