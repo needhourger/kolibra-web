@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import BookDetail from '../views/BookDetail.vue'
 import BookShelf from '@/views/BookShelf.vue'
 import ReaderView from "@/views/ReaderView.vue"
+import LoginView from "@/views/LoginView.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +32,12 @@ const router = createRouter({
         },
       ]
     },
+    {
+      path: '/login',
+      name: 'Login',
+      props: true,
+      component: LoginView,
+    }
   ]
 })
 

@@ -16,7 +16,6 @@
 
 <script setup>
 import { getBooks } from '@/api';
-import { ElMessage } from 'element-plus';
 import { onMounted, ref } from 'vue';
 const loading = ref(false)
 const books = ref([])
@@ -29,7 +28,6 @@ const queryBooks = () => {
       books.value = res
     }
   }).catch(err => {
-    ElMessage.error(err.error)
     console.log(err)
   }).finally(() => {
     loading.value = false

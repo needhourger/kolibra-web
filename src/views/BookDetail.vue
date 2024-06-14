@@ -17,7 +17,6 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { getBookByID, getBookChaptersById } from '@/api'
-import { ElMessage } from 'element-plus';
 const props = defineProps({
   bookId: { type: String, default: '' },
 })
@@ -35,7 +34,6 @@ const queryBookDetail = () => {
       bookInfo.value = res
     }
   }).catch(err => {
-    ElMessage.error(err.error)
     console.log(err)
   }).finally(() => {
     loading.value = false

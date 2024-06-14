@@ -4,12 +4,14 @@
   <div class="header">
     <RouterLink class="title" :to="{ name: 'Bookshelf' }">Kolibra</RouterLink>
     <el-button plain size="large" class="w-32 font-xl font-bold" @click="handleScan">Scan</el-button>
+    <el-progress :indeterminate="true" :percentage="loadStore.percentage"></el-progress>
   </div>
 </template>
 
 <script setup>
 import { requestScanLibrary } from '@/api';
-
+import { useLoadingStore} from '@/stores/loadStore';
+const loadStore = useLoadingStore()
 const handleScan = () => {
   requestScanLibrary().then(res => {
     console.log(res)
