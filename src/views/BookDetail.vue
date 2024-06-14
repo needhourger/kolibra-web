@@ -30,8 +30,8 @@ const chaptersSplited = computed(() => {
 const queryBookDetail = () => {
   loading.value = true
   getBookByID(props.bookId).then(res => {
-    if (res) {
-      bookInfo.value = res
+    if (res && res.data) {
+      bookInfo.value = res.data
     }
   }).catch(err => {
     console.log(err)
@@ -41,8 +41,8 @@ const queryBookDetail = () => {
 }
 const queryBookChapters = () => {
   getBookChaptersById(props.bookId).then(res => {
-    if (res) {
-      chapters.value = res
+    if (res && res.data) {
+      chapters.value = res.data
     }
   }).then(err => {
     console.log(err)

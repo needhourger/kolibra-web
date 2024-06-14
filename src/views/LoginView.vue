@@ -23,6 +23,7 @@ import { requestAuth } from "@/api";
 import { useToken } from "@/stores/token";
 import { reactive } from "vue"
 import { useRoute, useRouter } from "vue-router";
+import _ from "loadsh"
 const form = reactive({
   username: "",
   password: ""
@@ -38,7 +39,13 @@ const handleLogin = () => {
     if (res && res.token) {
       tokenStore.setToken(res.token)
     }
-    const to = atob(route.query.to) || "/"
+    let to = _.get(route,"query.to","")
+    if (_.isEmpty(to)) {
+      to = "/bookshelf"
+    } else {
+      to = atob(to)
+    }
+    console.log("redirect to", to)
     router.push(to)
   }).catch(err => {
     console.log(err)

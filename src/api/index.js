@@ -1,7 +1,7 @@
 import request from "./request"
 
 export const getBooks = () => {
-  return request.get('books')
+  return request.get('/books')
 }
 export const getBookByID = (bid) => {
   const url = `/books/${bid}`
@@ -24,6 +24,5 @@ export const requestScanLibrary = () => {
   return request.get(url)
 }
 export const requestAuth = (params) => {
-  const url = '/auth'
-  return request.post(url,params)
+  return request.post('/auth',params)
 }

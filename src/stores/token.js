@@ -4,7 +4,7 @@ import { computed, ref } from "vue";
 export const useToken = defineStore('token',() => {
   const token = ref()
   const jwtToken = computed(() => {
-    return `Bearer ${token.value}`
+    return `Bearer ${token.value}` || ""
   })
   function setToken(t) {
     if (t) {

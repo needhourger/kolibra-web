@@ -23,9 +23,9 @@ const books = ref([])
 const queryBooks = () => {
   loading.value = true
   getBooks().then(res => {
-    if (res) {
+    if (res && res.data) {
       console.log(res)
-      books.value = res
+      books.value = res.data
     }
   }).catch(err => {
     console.log(err)
