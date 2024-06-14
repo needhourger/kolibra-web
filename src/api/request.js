@@ -1,5 +1,5 @@
 import router from "@/router"
-import { useLoadingStore } from "@/stores/loadStore"
+import { useLoading } from "@/stores/loading"
 import axios from "axios"
 import { ElMessage } from "element-plus"
 import _ from "loadsh"
@@ -12,21 +12,21 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use(function(config) {
-  const loadStore = useLoadingStore()
+  const loadStore = useLoading()
   loadStore.loading()
   return config
 },function(error) {
-  const loadStore = useLoadingStore()
+  const loadStore = useLoading()
   loadStore.stop()
   return Promise.reject(error)
 })
 
 instance.interceptors.response.use(function(response) {
-  const loadStore = useLoadingStore()
+  const loadStore = useLoading()
   loadStore.stop()
   return response
 }, function(error) {
-  const loadStore = useLoadingStore()
+  const loadStore = useLoading()
   loadStore.stop()
   console.log(error)
   const status = error.response.status

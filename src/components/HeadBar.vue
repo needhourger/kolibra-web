@@ -10,8 +10,8 @@
 
 <script setup>
 import { requestScanLibrary } from '@/api';
-import { useLoadingStore} from '@/stores/loadStore';
-const loadStore = useLoadingStore()
+import { useLoading} from '@/stores/loading.js'
+const loadStore = useLoading()
 const handleScan = () => {
   requestScanLibrary().then(res => {
     console.log(res)
