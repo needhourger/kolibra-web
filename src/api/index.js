@@ -23,3 +23,7 @@ export const requestScanLibrary = () => {
   const url = '/library/scan'
   return request.get(url)
 }
+export const requestAuth = (params) => {
+  const url = '/auth'
+  return request.post(url,params)
+}

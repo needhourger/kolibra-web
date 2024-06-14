@@ -8,10 +8,10 @@
           <el-input v-model="form.username"></el-input>
         </el-form-item>
         <el-form-item label="password" prop="password">
-          <el-input v-model="form.password" show-password></el-input>
+          <el-input v-model="form.password" show-password @keydown.enter="handleLogin"></el-input>
         </el-form-item>
         <div>
-          <el-button type="primary" class="w-full">Login</el-button>
+          <el-button type="primary" class="w-full" @click="handleLogin">Login</el-button>
         </div>
       </el-form>
     </el-card>
@@ -19,11 +19,26 @@
 </template>
 
 <script setup>
+import { requestAuth } from "@/api";
 import { reactive } from "vue"
+import { useRoute, useRouter } from "vue-router";
 const form = reactive({
   username: "",
   password: ""
 })
+const route = useRoute()
+const router = useRouter()
+const handleLogin = () => {
+  console.log("login")
+  const payload = {
+    ...form
+  }
+  requestAuth(payload).then(res => {
+    router.push(route.query.to || "/")
+  }).catch(err => {
+    console.log(err)
+  })
+}
 </script>
 
 <style lang="scss" scoped>

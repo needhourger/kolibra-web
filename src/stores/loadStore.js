@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 
 export const useLoadingStore = defineStore('load', () => {
   const state = ref(false)
-  const isloading = computed(() => state.value)
+  const isLoading = computed(() => state.value)
   const percentage = computed(() => 50)
   function loading() {
     state.value = true
@@ -11,4 +11,5 @@ export const useLoadingStore = defineStore('load', () => {
   function stop() {
     state.value = false
   }
+  return { state, isLoading: isLoading, percentage, loading, stop}
 })

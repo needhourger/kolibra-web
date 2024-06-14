@@ -11,21 +11,21 @@ const instance = axios.create({
   headers: {'Content-Type':'application/json'}
 })
 
-instance.interceptors.request.use((config) => {
+instance.interceptors.request.use(function(config) {
   const loadStore = useLoadingStore()
   loadStore.loading()
   return config
-},(error) => {
+},function(error) {
   const loadStore = useLoadingStore()
   loadStore.stop()
   return Promise.reject(error)
 })
 
-instance.interceptors.response.use((response) => {
+instance.interceptors.response.use(function(response) {
   const loadStore = useLoadingStore()
   loadStore.stop()
   return response
-}, error => {
+}, function(error) {
   const loadStore = useLoadingStore()
   loadStore.stop()
   console.log(error)

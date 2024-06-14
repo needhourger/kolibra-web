@@ -4,7 +4,7 @@
   <div class="header">
     <RouterLink class="title" :to="{ name: 'Bookshelf' }">Kolibra</RouterLink>
     <el-button plain size="large" class="w-32 font-xl font-bold" @click="handleScan">Scan</el-button>
-    <el-progress :indeterminate="true" :percentage="loadStore.percentage"></el-progress>
+    <el-progress v-show="loadStore.isLoading" :indeterminate="true" :percentage="loadStore.percentage"></el-progress>
   </div>
 </template>
 
