@@ -20,6 +20,7 @@
 
 <script setup>
 import { requestAuth } from "@/api";
+import { useToken } from "@/stores/token";
 import { reactive } from "vue"
 import { useRoute, useRouter } from "vue-router";
 const form = reactive({
@@ -28,12 +29,15 @@ const form = reactive({
 })
 const route = useRoute()
 const router = useRouter()
+const tokenStore = useToken()
 const handleLogin = () => {
-  console.log("login")
   const payload = {
     ...form
   }
   requestAuth(payload).then(res => {
+    if (res && res.token) {
+      tokenStore.setToken(res.token)
+    }
     const to = atob(route.query.to) || "/"
     router.push(to)
   }).catch(err => {

@@ -1,5 +1,6 @@
 import router from "@/router"
 import { useLoading } from "@/stores/loading"
+import { useToken } from "@/stores/token"
 import axios from "axios"
 import { ElMessage } from "element-plus"
 import _ from "loadsh"
@@ -13,7 +14,9 @@ const instance = axios.create({
 
 instance.interceptors.request.use(function(config) {
   const loadStore = useLoading()
+  const tokenStore = useToken()
   loadStore.loading()
+  config.headers.Authorization = tokenStore.jwtToken
   return config
 },function(error) {
   const loadStore = useLoading()
