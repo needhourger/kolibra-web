@@ -34,7 +34,8 @@ const handleLogin = () => {
     ...form
   }
   requestAuth(payload).then(res => {
-    router.push(route.query.to || "/")
+    const to = atob(route.query.to) || "/"
+    router.push(to)
   }).catch(err => {
     console.log(err)
   })
