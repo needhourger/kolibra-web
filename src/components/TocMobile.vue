@@ -27,7 +27,7 @@
 import { getBookChaptersById } from '@/api';
 import { onMounted, ref, watch } from 'vue';
 import _ from "loadsh"
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const show = defineModel()
 
