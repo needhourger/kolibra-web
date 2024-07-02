@@ -36,7 +36,7 @@ instance.interceptors.response.use(function(response) {
   if (status === 401) {
     router.push({name:"Login", query: { to: btoa(window.location.pathname) }})
   }
-  ElMessage.error(_.get(error,"response.data.message",""))
+  ElMessage.error(_.get(error,"response.data.error",""))
   return Promise.reject(error.response);
 })
 
