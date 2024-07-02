@@ -24,13 +24,13 @@ const router = createRouter({
           props: true,
           component: BookDetail
         },
-        {
-          path: '/reader/:bookId/:chapterId',
-          name: 'Reader',
-          props: true,
-          component: ReaderView,
-        },
       ]
+    },
+    {
+      path: '/reader/:bookId/:chapterId',
+      name: 'Reader',
+      props: true,
+      component: ReaderView
     },
     {
       path: '/login',

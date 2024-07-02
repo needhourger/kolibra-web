@@ -3,10 +3,10 @@
     <el-row :gutter="30">
       <el-col class="book-box"
         v-for="book,bindex in books" :key="bindex"
-        :xs="8" :sm="6" :md="4" :lg="3">
+        :xs="12" :sm="12" :md="4" :lg="3">
         <router-link :to="`/book/${book.ID}`">
           <el-card shadow="hover" class=" overflow-hidden">
-            <div class="text-xl text-center">{{ book.Title }}</div>
+            <div class="text-md text-center">{{ book.Title }}</div>
           </el-card>
         </router-link>
       </el-col>

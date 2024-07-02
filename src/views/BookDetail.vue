@@ -1,14 +1,15 @@
 <template>
   <div v-loading="loading" class="px-10 py-5">
-    <h1 class="text-3xl font-bold">{{ bookInfo.Title }}</h1>
-    <h2 class="">Author: {{ bookInfo.Author }}</h2>
-    <el-divider></el-divider>
-    <h1 class="text-3xl font-bold">Chapters</h1>
+    <div class="text-2xl font-bold h-10">{{ bookInfo.Title }}</div>
+    <div class="text-gray-500">Author: {{ bookInfo.Author }}</div>
+    <el-divider class="m-0"></el-divider>
+    <div class="text-xl font-bold mb-2">Chapters</div>
     <el-row :gutter="12" v-if="bookInfo">
-      <el-col :span="8" v-for="chunks, ci in chaptersSplited" :key="ci">
+      <el-col :span="8" :sm="12" :xs="24" v-for="chunks, ci in chaptersSplited" :key="ci">
         <RouterLink  v-for="chapter, cindex in chunks" :key="cindex"
-          :to="`/reader/${bookId}/${chapter.ID}`">
-          <h2>{{ chapter.Title }}</h2>
+          :to="`/reader/${bookId}/${chapter.ID}`"
+          class="text-base hover:text-xl transition duration-300 h-10">
+          <div class="h-8">{{ chapter.Title }}</div>
         </RouterLink>
       </el-col>
     </el-row>

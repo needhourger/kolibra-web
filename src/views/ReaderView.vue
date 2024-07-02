@@ -1,7 +1,7 @@
 <template>
-  <div class="p-10" v-loading="loading">
-    <h1 class="text-xl font-bold">{{ chapterInfo.Title }}</h1>
-    <div v-html="contentHtml"></div>
+  <div class="px-4 py-3" v-loading="loading">
+    <div class="text-xl font-bold">{{ chapterInfo.Title }}</div>
+    <div v-html="contentHtml" class=""></div>
   </div>
 </template>
 
@@ -22,7 +22,7 @@ const contentHtml = computed(() => {
   const lines = content.value.split('\n')
   let ret = ""
   for (let line of lines) {
-    ret += line.trim() + '<br/>'
+    ret += `<div class='paraph'>${line.trim()}</div>`
   }
   return ret
 })
@@ -58,5 +58,11 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-
+</style>
+<style>
+.paraph {
+  color: #505050;
+  margin-bottom: 1rem;
+  font-family: 'FZQingKe', 'Inter';
+}
 </style>
