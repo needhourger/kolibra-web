@@ -1,6 +1,6 @@
 <template>
-  <div class="px-4 py-3" v-loading="loading">
-    <div class="text-xl font-bold">{{ chapterInfo.Title }}</div>
+  <div class="render" v-loading="loading">
+    <div class="text-lg font-medium leading-10 mb-1">{{ chapterInfo.Title }}</div>
     <div v-html="contentHtml" class=""></div>
   </div>
 </template>
@@ -44,8 +44,8 @@ const queryChapter = () => {
     chapterId: props.chapterId
   }
   getBookChapterById(payload).then(res => {
-    if (res) {
-      chapterInfo.value = res
+    if (res && res.data) {
+      chapterInfo.value = res.data
       queryContent()
     }
   }).finally(() => {
@@ -58,11 +58,15 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.render {
+  padding: 0.25rem 1.2rem;
+}
 </style>
 <style>
 .paraph {
   color: #505050;
   margin-bottom: 1rem;
   font-family: 'FZQingKe', 'Inter';
+  line-height: 1.8rem;
 }
 </style>
