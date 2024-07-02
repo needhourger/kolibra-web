@@ -1,14 +1,22 @@
 <template>
-  <div class="render" v-loading="loading">
+  <div :class="isMobile()?'render-mb':'render'" v-loading="loading">
     <div class="text-lg font-medium leading-10 mb-1">{{ chapterInfo.Title }}</div>
     <div v-html="contentHtml" class=""></div>
+    <div class="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen flex items-end">
+      <div class="w-1/4 h-1/2" @click="redirectChapter(false)"></div>
+      <div class="w-1/2"></div>
+      <div class="w-1/4 h-1/2" @click="redirectChapter(true)"></div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { getBookChapterById, getBookChapterContent } from '@/api';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import _ from "loadsh"
+import { useRouter } from 'vue-router';
+import { ElMessage } from 'element-plus';
+import { isMobile } from '@/utils';
 
 const props = defineProps({
   bookId: { type: String, default: "" },
@@ -17,6 +25,7 @@ const props = defineProps({
 const loading = ref(false)
 const chapterInfo = ref({})
 const content = ref("")
+const router = useRouter()
 const contentHtml = computed(() => {
   if (_.isEmpty(content.value)) return ""
   const lines = content.value.split('\n')
@@ -52,14 +61,41 @@ const queryChapter = () => {
     loading.value = false
   })
 }
+const redirectChapter = (next=true) => {
+  const bookId = _.get(chapterInfo.value,'BookID',"")
+  const chapterId = _.get(chapterInfo.value,next?'NextChapterID':'PreviousChapterID','')
+  if (bookId && chapterId) {
+    router.push({ name: 'Reader', params: { bookId, chapterId }})
+  } else if (!chapterId) {
+    ElMessage.info(next?'This is the last chapter':'This is the first chapter')
+  }
+}
+const scroll2Top = () => {
+  window.scrollTo({top:0})
+}
+watch(() => props.chapterId, () => {
+  queryChapter()
+  scroll2Top()
+})
 onMounted(() => {
   queryChapter()
+})
+onUnmounted(() => {
 })
 </script>
 
 <style lang="scss" scoped>
-.render {
+.render-mb {
   padding: 0.25rem 1.2rem;
+/*   display: block;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto; */
+}
+.render {
+  width: 40%;
+  height: 100%;
+  margin-inline: auto;
 }
 </style>
 <style>
