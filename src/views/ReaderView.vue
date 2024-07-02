@@ -4,7 +4,7 @@
     <div v-html="contentHtml" class=""></div>
     <div class="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen flex items-end">
       <div class="w-1/4 h-1/2" @click="redirectChapter(false)"></div>
-      <div class="w-1/2 h-1/2" @click="tocMShow = true"></div>
+      <div class="w-1/2 h-2/3" @click="tocMShow = true"></div>
       <div class="w-1/4 h-1/2" @click="redirectChapter(true)"></div>
     </div>
     <TocMobile v-model="tocMShow" :bookId="bookId" :chapterId="chapterId"/>
