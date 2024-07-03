@@ -2,10 +2,16 @@
   <div :class="isMobile() ? 'render-mb' : 'render'" v-loading="loading">
     <div class="text-lg font-medium leading-10 mb-1">{{ chapterInfo.Title }}</div>
     <div v-html="contentHtml" class=""></div>
-    <div class="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen flex items-end">
-      <div class="w-1/4 h-1/2" @click="redirectChapter(false)"></div>
-      <div class="w-1/2 h-2/3" @click="tocMShow = true"></div>
-      <div class="w-1/4 h-1/2" @click="redirectChapter(true)"></div>
+    <div class="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen">
+      <div class="flex w-screen h-1/2">
+        <div class="w-1/4 h-full bg-gray-300" @click="tocMShow = true"></div>
+        <div class="w-3/4 h-full"></div>
+      </div>
+      <div class="flex w-screen h-1/2">
+        <div class="w-1/4 h-full bg-green-50" @click="redirectChapter(false)"></div>
+        <div class="w-1/2 h-full"></div>
+        <div class="w-1/4 h-full bg-red-100" @click="redirectChapter(true)"></div>
+      </div>
     </div>
     <TocMobile v-model="tocMShow" :bookId="bookId" :chapterId="chapterId"/>
   </div>
