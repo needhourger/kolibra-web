@@ -5,7 +5,8 @@
     <el-divider class="m-0"></el-divider>
     <div class="text-xl font-bold mb-2">Chapters</div>
     <el-row :gutter="12" v-if="bookInfo">
-      <el-col :span="8" :sm="12" :xs="24" v-for="chunks, ci in chaptersSplited" :key="ci">
+      <el-col :span="8" :lg="8" :sm="12" :xs="24"
+        v-for="chunks, ci in chaptersSplited" :key="ci">
         <RouterLink  v-for="chapter, cindex in chunks" :key="cindex"
           :to="`/reader/${bookId}/${chapter.ID}`"
           class="text-base hover:text-xl transition duration-300 h-10">
