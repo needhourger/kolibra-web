@@ -2,44 +2,63 @@
   <div :class="isMobile() ? 'render-mb' : 'render'" v-loading="loading">
     <div class="text-lg font-medium leading-10 mb-1">{{ chapterInfo.Title }}</div>
     <div v-html="contentHtml" class=""></div>
-    <div class="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen">
+    <div class="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen font-medium">
       <div class="flex w-screen h-1/2">
-        <div class="w-1/4 h-full bg-gray-300" @click="tocMShow = true"></div>
-        <div class="w-3/4 h-full"></div>
+        <div class="w-1/4 h-full flex items-center justify-center"
+          :class="{'bg-pink-200 bg-opacity-70':helpMSHow }" @click="tocMShow = true">
+          <span v-show="helpMSHow" class="text-sm">Open chapter list</span>
+        </div>
+        <div class="w-3/4 h-full flex items-center justify-center"
+          :class="{'bg-blue-200 bg-opacity-70':helpMSHow}" @click="menuMShow = true">
+          <span v-show="helpMSHow" class="text-sm">Open menu</span>
+        </div>
       </div>
       <div class="flex w-screen h-1/2">
-        <div class="w-1/4 h-full bg-green-50" @click="redirectChapter(false)"></div>
-        <div class="w-1/2 h-full"></div>
-        <div class="w-1/4 h-full bg-red-100" @click="redirectChapter(true)"></div>
+        <div class="w-1/3 h-full flex items-center justify-center"
+          :class="{'bg-red-200 bg-opacity-70':helpMSHow}" @click="redirectChapter(false)">
+          <span v-show="helpMSHow">Previous chapter</span>
+        </div>
+        <div class="w-1/3 h-full flex items-center justify-center"
+          :class="{'bg-blue-200 bg-opacity-70':helpMSHow}" @click="menuMShow = true">
+        </div>
+        <div class="w-1/3 h-full flex items-center justify-center"
+          :class="{'bg-green-200 bg-opacity-70':helpMSHow}" @click="redirectChapter(true)">
+          <span v-show="helpMSHow">Next chapter</span>
+        </div>
       </div>
     </div>
     <TocMobile v-model="tocMShow" :bookId="bookId" :chapterId="chapterId"/>
+    <ReaderMenuMobile v-model="menuMShow" :bookInfo="bookInfo" @showHelp="(v) => helpMSHow=v"/>
   </div>
 </template>
 <script setup>
-import { getBookChapterById, getBookChapterContent } from '@/api';
+import { getBookByID, getBookChapterById, getBookChapterContent } from '@/api';
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import _ from "loadsh"
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { isMobile } from '@/utils';
 import TocMobile from '@/components/TocMobile.vue';
+import ReaderMenuMobile from '@/components/ReaderMenuMobile.vue';
 
 const props = defineProps({
   bookId: { type: String, default: "" },
   chapterId: { type: String, default: "" },
 })
+const helpMSHow = ref(false)
 const tocMShow = ref(false)
+const menuMShow = ref(false)
 const loading = ref(false)
 const chapterInfo = ref({})
 const content = ref("")
 const router = useRouter()
+const bookInfo = ref({})
 const contentHtml = computed(() => {
   if (_.isEmpty(content.value)) return ""
   const lines = content.value.split('\n')
   let ret = ""
   for (let line of lines) {
-    ret += `<div class='paraph'>${line.trim()}</div>`
+    ret += `<p class='paraph'>${line.trim()}</p>`
   }
   return ret
 })
@@ -81,11 +100,22 @@ const redirectChapter = (next = true) => {
 const scroll2Top = () => {
   window.scrollTo({ top: 0 })
 }
+const queryBookInfo = () => {
+  getBookByID(props.bookId).then(res => {
+    if (res && res.data) {
+      bookInfo.value = res.data
+    }
+  })
+}
 watch(() => props.chapterId, () => {
   queryChapter()
   scroll2Top()
 })
+watch(() => props.bookId, () => {
+  queryBookInfo()
+})
 onMounted(() => {
+  queryBookInfo()
   queryChapter()
 })
 onUnmounted(() => {
