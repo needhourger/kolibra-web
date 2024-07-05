@@ -3,7 +3,9 @@
 <template>
   <div class="header">
     <RouterLink class="title" :to="{ name: 'Bookshelf' }">Kolibra</RouterLink>
-    <el-button plain round size="large" class="w-12 font-sans" @click="handleScan">Scan</el-button>
+    <el-icon @click="handleScan" size="32" class="border rounded-md p-1 font-bold">
+      <Refresh/>
+    </el-icon>
     <el-progress
       class="absolute bottom-0 left-0 right-0"
       v-show="loadStore.isLoading"
@@ -15,7 +17,8 @@
 
 <script setup>
 import { requestScanLibrary } from '@/api';
-import { useLoading} from '@/stores/loading.js'
+import { useLoading } from '@/stores/loading.js'
+import { Refresh } from "@element-plus/icons-vue"
 const loadStore = useLoading()
 const handleScan = () => {
   requestScanLibrary().then(res => {

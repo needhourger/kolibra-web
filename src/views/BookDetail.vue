@@ -9,8 +9,9 @@
         v-for="chunks, ci in chaptersSplited" :key="ci">
         <RouterLink  v-for="chapter, cindex in chunks" :key="cindex"
           :to="`/reader/${bookId}/${chapter.ID}`"
-          class="text-base hover:text-xl transition duration-300 h-10">
-          <div class="h-8">{{ chapter.Title }}</div>
+          class="text-base">
+          <div class="rounded-md p-1 hover:bg-green-100 hover:font-bold active:bg-green-100">
+            {{ chapter.Title }}</div>
         </RouterLink>
       </el-col>
     </el-row>
