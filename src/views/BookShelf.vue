@@ -4,21 +4,24 @@
       <el-col class="book-box"
         v-for="book,bindex in books" :key="bindex"
         :xs="12" :sm="12" :md="4" :lg="3">
-        <router-link :to="`/book/${book.ID}`">
-          <el-card shadow="hover" class=" overflow-hidden">
+        <div @click="handleRedirect(book)" class=" w-full h-full">
+          <el-card shadow="hover" class="overflow-hidden">
             <div class="text-md text-center">{{ book.Title }}</div>
           </el-card>
-        </router-link>
+        </div>
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script setup>
-import { getBooks } from '@/api';
+import { getBookReadingRecord, getBooks } from '@/api';
+import { isMobile } from '@/utils';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 const loading = ref(false)
 const books = ref([])
+const router = useRouter()
 
 const queryBooks = () => {
   loading.value = true
@@ -32,6 +35,20 @@ const queryBooks = () => {
   }).finally(() => {
     loading.value = false
   })
+}
+
+const handleRedirect = (book) => {
+  console.log(isMobile())
+  if (isMobile()) {
+    getBookReadingRecord(book.ID).then(res => {
+      if (res && res.data) {
+        console.log(res)
+        router.push({ name: "Reader", params: {bookId: book.ID, chapterId: res.data }})
+      }
+    })
+  } else {
+    router.push({ name: "BookDetail", params: {bookId: book.ID}})
+  }
 }
 onMounted(() => {
   queryBooks()

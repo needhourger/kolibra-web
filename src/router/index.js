@@ -20,7 +20,7 @@ const router = createRouter({
         },
         {
           path: '/book/:bookId',
-          name: 'Book',
+          name: 'BookDetail',
           props: true,
           component: BookDetail
         },

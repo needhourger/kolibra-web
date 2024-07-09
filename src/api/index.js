@@ -26,3 +26,7 @@ export const requestScanLibrary = () => {
 export const requestAuth = (params) => {
   return request.post('/auth',params)
 }
+export const getBookReadingRecord = (bookId) => {
+  const url = `/reading_record/${bookId}`
+  return request.get(url)
+}
