@@ -11,6 +11,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
+      redirect: '/bookshelf',
       component: HomeView,
       children: [
         {
