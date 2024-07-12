@@ -1,7 +1,10 @@
 <template>
   <div v-loading="loading" class="px-10 py-5">
     <div class="text-2xl font-bold h-10">{{ bookInfo.Title }}</div>
-    <div class="text-gray-500">Author: {{ bookInfo.Author }}</div>
+    <div class="w-full flex justify-between">
+      <div class="text-gray-500">Author: {{ bookInfo.Author }}</div>
+      <el-button size="large" @click="handleContinueRead">Continue Reading</el-button>
+    </div>
     <el-divider class="m-0"></el-divider>
     <div class="text-xl font-bold mb-2">Chapters</div>
     <el-row :gutter="12" v-if="bookInfo">
@@ -20,16 +23,30 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { getBookByID, getBookChaptersById } from '@/api'
+import { useRouter } from 'vue-router';
+import { getBookReadingRecord } from '@/api';
 const props = defineProps({
   bookId: { type: String, default: '' },
 })
 const bookInfo = ref({})
 const chapters = ref([])
 const loading = ref(false)
+const router = useRouter()
 const chaptersSplited = computed(() => {
   const chunkSize = Math.ceil(chapters.value.length / 3)
-  return [chapters.value.slice(0,chunkSize), chapters.value.slice(chunkSize+1,2 * chunkSize), chapters.value.slice(2 * chunkSize + 1)]
+  return [
+    chapters.value.slice(0,chunkSize),
+    chapters.value.slice(chunkSize+1,2 * chunkSize),
+    chapters.value.slice(2 * chunkSize + 1)]
 })
+const handleContinueRead = () => {
+  getBookReadingRecord(props.bookId).then(res => {
+    if (res && res.data) {
+      console.log(res)
+      router.push({ name: "Reader", params: {bookId: props.bookId, chapterId: res.data }})
+    }
+  })
+}
 const queryBookDetail = () => {
   loading.value = true
   getBookByID(props.bookId).then(res => {
