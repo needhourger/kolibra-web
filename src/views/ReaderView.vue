@@ -1,6 +1,7 @@
 <template>
   <div :class="isMobile() ? 'container-mb' : 'container'" v-loading="loading">
-    <div v-html="contentHtml" class="content" ref="contentRef"></div>
+    <div v-html="contentHtml"
+      :class="isMobile()?'content-mb':'content'" ref="contentRef"></div>
     <div class="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen font-medium">
       <div class="flex w-screen h-1/2">
         <div class="w-1/4 h-full flex items-center justify-center"
@@ -70,6 +71,7 @@ const queryContent = () => {
   getBookChapterContent(payload).then(res => {
     if (res && res.data) {
       content.value = res.data
+      scroll2Top()
     }
   })
 }
@@ -102,7 +104,20 @@ const nextPage = () => {
   const el = contentRef.value.$el || contentRef.value
   if (el) {
     if (el.scrollLeft < el.scrollLeftMax) {
-      el.scrollLeft = el.scrollLeft + el.offsetWidth
+      if (isMobile()) {
+        el.scrollLeft = el.scrollLeft + el.offsetWidth
+      } else {
+        const targetLeft = el.scrollLeft + el.offsetWidth + 48
+        console.log("old max", el.scrollLeftMax, el.offsetWidth);
+        if (targetLeft > el.scrollLeftMax) {
+          const block = document.createElement('p')
+          block.style.width = `${el.offsetWidth / 2 - 24}px`
+          block.style.height = "100%"
+          el.appendChild(block)
+          console.log("new max:", el.scrollLeftMax, targetLeft);
+        }
+        el.scrollLeft = targetLeft
+      }
     } else {
       redirectChapter(true)
     }
@@ -112,7 +127,11 @@ const previousPage = () => {
   const el = contentRef.value.$el || contentRef.value
   if (el) {
     if (el.scrollLeft > 0) {
-      el.scrollLeft = el.scrollLeft - el.offsetWidth
+      if (isMobile()) {
+        el.scrollLeft = el.scrollLeft + el.offsetWidth
+      } else {
+        el.scrollLeft = el.scrollLeft - el.offsetWidth - 48
+      }
     } else {
       redirectChapter(false)
     }
@@ -133,7 +152,6 @@ const queryBookInfo = () => {
 }
 watch(() => props.chapterId, () => {
   queryChapter()
-  scroll2Top()
 })
 watch(() => props.bookId, () => {
   queryBookInfo()
@@ -153,15 +171,23 @@ onUnmounted(() => {
 }
 
 .container {
-  width: 45%;
-  height: 100%;
-  margin-inline: auto;
+  width: 100vw;
+  height: 100vh;
+  padding: 8px 24px;
+}
+
+.content-mb {
+  height: calc(100vh - 16px);
+  columns: calc(100vw - 48px) auto;
+  column-gap: 0;
+  overflow: hidden;
 }
 
 .content {
   height: calc(100vh - 16px);
-  columns: calc(100vw - 48px) auto;
-  column-gap: 0;
+  width: calc(100vw - 48px);
+  columns: calc(50vw - 48px) auto;
+  column-gap: 48px;
   overflow: hidden;
 }
 </style>
