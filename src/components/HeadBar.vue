@@ -30,6 +30,7 @@ const handleScan = () => {
 <style scoped>
 .header {
   height: 60px;
+  width: 100vw;
   display: flex;
   padding: 10px;
   align-items: center;

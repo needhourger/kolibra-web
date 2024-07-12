@@ -2,7 +2,7 @@
   <el-drawer v-model="show"
     lock-scroll close-on-click-modal
     close-on-press-escape destroy-on-close
-    direction="ltr" size="75%"
+    direction="ltr" :size="isMobile()?'75%':'30%'"
     style="--el-drawer-padding-primary: 0;"
     :show-close="false">
     <template #header>
@@ -28,6 +28,7 @@ import { getBookChaptersById } from '@/api';
 import { onMounted, ref, watch } from 'vue';
 import _ from "loadsh"
 import { useRouter } from 'vue-router';
+import { isMobile } from '@/utils';
 
 const show = defineModel()
 

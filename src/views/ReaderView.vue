@@ -25,7 +25,7 @@ import _ from "loadsh"
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { isMobile } from '@/utils';
-import TocMobile from '@/components/TocMobile.vue';
+import TocMobile from '@/components/TocDrawer.vue';
 import ReaderMenuMobile from '@/components/ReaderMenuMobile.vue';
 import MobileActionOverlay from '@/components/MobileActionOverlay.vue';
 import ActionOverlay from "@/components/ActionOverlay.vue"
