@@ -33,7 +33,7 @@
 </template>
 <script setup>
 import { getBookByID, getBookChapterById, getBookChapterContent } from '@/api';
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import _ from "loadsh"
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
@@ -71,7 +71,9 @@ const queryContent = () => {
   getBookChapterContent(payload).then(res => {
     if (res && res.data) {
       content.value = res.data
-      scroll2Top()
+      nextTick(() => {
+        scroll2Top()
+      })
     }
   })
 }
@@ -170,12 +172,6 @@ onUnmounted(() => {
   padding: 8px 24px;
 }
 
-.container {
-  width: 100vw;
-  height: 100vh;
-  padding: 8px 24px;
-}
-
 .content-mb {
   height: calc(100vh - 16px);
   columns: calc(100vw - 48px) auto;
@@ -183,10 +179,16 @@ onUnmounted(() => {
   overflow: hidden;
 }
 
+.container {
+  width: 100vw;
+  height: 100vh;
+  padding: 24px 48px;
+}
+
 .content {
-  height: calc(100vh - 16px);
-  width: calc(100vw - 48px);
-  columns: calc(50vw - 48px) auto;
+  height: calc(100vh - 48px);
+  width: calc(100vw - 96px);
+  columns: calc(50vw - 96px) auto;
   column-gap: 48px;
   overflow: hidden;
 }
