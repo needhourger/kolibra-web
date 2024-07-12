@@ -33,7 +33,7 @@ instance.interceptors.response.use(function(response) {
   loadStore.stop()
   console.log(error)
   const status = error.response.status
-  if (status === 401) {
+  if (status === 403) {
     router.push({name:"Login", query: { to: btoa(window.location.pathname) }})
   }
   ElMessage.error(_.get(error,"response.data.error",""))
