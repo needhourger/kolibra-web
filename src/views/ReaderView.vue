@@ -1,7 +1,6 @@
 <template>
-  <div :class="isMobile() ? 'render-mb' : 'render'" v-loading="loading">
-    <div class="text-lg font-medium leading-10 mb-1">{{ chapterInfo.Title }}</div>
-    <div v-html="contentHtml" class=""></div>
+  <div :class="isMobile() ? 'container-mb' : 'container'" v-loading="loading">
+    <div v-html="contentHtml" class="content" ref="contentRef"></div>
     <div class="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen font-medium">
       <div class="flex w-screen h-1/2">
         <div class="w-1/4 h-full flex items-center justify-center"
@@ -15,14 +14,14 @@
       </div>
       <div class="flex w-screen h-1/2">
         <div class="w-1/3 h-full flex items-center justify-center"
-          :class="{'bg-red-200 bg-opacity-70':helpMSHow}" @click="redirectChapter(false)">
+          :class="{'bg-red-200 bg-opacity-70':helpMSHow}" @click="previousPage">
           <span v-show="helpMSHow">Previous chapter</span>
         </div>
         <div class="w-1/3 h-full flex items-center justify-center"
           :class="{'bg-blue-200 bg-opacity-70':helpMSHow}" @click="menuMShow = true">
         </div>
         <div class="w-1/3 h-full flex items-center justify-center"
-          :class="{'bg-green-200 bg-opacity-70':helpMSHow}" @click="redirectChapter(true)">
+          :class="{'bg-green-200 bg-opacity-70':helpMSHow}" @click="nextPage">
           <span v-show="helpMSHow">Next chapter</span>
         </div>
       </div>
@@ -53,10 +52,11 @@ const chapterInfo = ref({})
 const content = ref("")
 const router = useRouter()
 const bookInfo = ref({})
+const contentRef=ref()
 const contentHtml = computed(() => {
   if (_.isEmpty(content.value)) return ""
   const lines = content.value.split('\n')
-  let ret = ""
+  let ret = `<h2>${chapterInfo.value.Title}</h2>`
   for (let line of lines) {
     ret += `<p class='paraph'>${line.trim()}</p>`
   }
@@ -97,8 +97,32 @@ const redirectChapter = (next = true) => {
     ElMessage.info(next ? 'This is the last chapter' : 'This is the first chapter')
   }
 }
+
+const nextPage = () => {
+  const el = contentRef.value.$el || contentRef.value
+  if (el) {
+    if (el.scrollLeft < el.scrollLeftMax) {
+      el.scrollLeft = el.scrollLeft + el.offsetWidth
+    } else {
+      redirectChapter(true)
+    }
+  }
+}
+const previousPage = () => {
+  const el = contentRef.value.$el || contentRef.value
+  if (el) {
+    if (el.scrollLeft > 0) {
+      el.scrollLeft = el.scrollLeft - el.offsetWidth
+    } else {
+      redirectChapter(false)
+    }
+  }
+}
 const scroll2Top = () => {
-  window.scrollTo({ top: 0 })
+  const el = contentRef.value.$el || contentRef.value
+  if (el) {
+    el.scrollTo({ top:0, left: 0 })
+  }
 }
 const queryBookInfo = () => {
   getBookByID(props.bookId).then(res => {
@@ -122,18 +146,23 @@ onUnmounted(() => {
 })
 </script>
 <style lang="scss" scoped>
-.render-mb {
-  padding: 0.25rem 1.2rem;
-  /*   display: block;
+.container-mb {
   width: 100vw;
   height: 100vh;
-  overflow: auto; */
+  padding: 8px 24px;
 }
 
-.render {
+.container {
   width: 45%;
   height: 100%;
   margin-inline: auto;
+}
+
+.content {
+  height: calc(100vh - 16px);
+  columns: calc(100vw - 48px) auto;
+  column-gap: 0;
+  overflow: hidden;
 }
 </style>
 <style>
