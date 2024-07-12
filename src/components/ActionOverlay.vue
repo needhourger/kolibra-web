@@ -1,15 +1,5 @@
 <template>
   <div class="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen font-medium">
-<!--     <div class="flex w-screen h-1/2">
-      <div class="w-1/4 h-full flex items-center justify-center" :class="{ 'bg-pink-200 bg-opacity-70': helpShow }"
-        @click="tocMShow = true">
-        <span v-show="helpShow" class="text-sm">Open chapter list</span>
-      </div>
-      <div class="w-3/4 h-full flex items-center justify-center" :class="{ 'bg-blue-200 bg-opacity-70': helpShow }"
-        @click="menuShow = true">
-        <span v-show="helpShow" class="text-sm">Open menu</span>
-      </div>
-    </div> -->
     <div class="flex w-screen h-full">
       <div class="w-1/5 h-full flex items-center justify-center" :class="{ 'bg-red-200 bg-opacity-70': helpShow }"
         @click="emits('previousPage')">
