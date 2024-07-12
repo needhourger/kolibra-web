@@ -110,13 +110,13 @@ const nextPage = () => {
         el.scrollLeft = el.scrollLeft + el.offsetWidth
       } else {
         const targetLeft = el.scrollLeft + el.offsetWidth + 48
-        console.log("old max", el.scrollLeftMax, el.offsetWidth);
+        // console.log("old max", el.scrollLeftMax, el.offsetWidth);
         if (targetLeft > el.scrollLeftMax) {
           const block = document.createElement('p')
-          block.style.width = `${el.offsetWidth / 2 - 24}px`
+          block.style.width = `${el.offsetWidth / 2 - 48}px`
           block.style.height = "100%"
           el.appendChild(block)
-          console.log("new max:", el.scrollLeftMax, targetLeft);
+          // console.log("new max:", el.scrollLeftMax, targetLeft);
         }
         el.scrollLeft = targetLeft
       }
