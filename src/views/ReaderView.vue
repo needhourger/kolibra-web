@@ -2,33 +2,10 @@
   <div :class="isMobile() ? 'container-mb' : 'container'" v-loading="loading">
     <div v-html="contentHtml"
       :class="isMobile()?'content-mb':'content'" ref="contentRef"></div>
-    <div class="fixed top-0 left-0 right-0 bottom-0 h-screen w-screen font-medium">
-      <div class="flex w-screen h-1/2">
-        <div class="w-1/4 h-full flex items-center justify-center"
-          :class="{'bg-pink-200 bg-opacity-70':helpMSHow }" @click="tocMShow = true">
-          <span v-show="helpMSHow" class="text-sm">Open chapter list</span>
-        </div>
-        <div class="w-3/4 h-full flex items-center justify-center"
-          :class="{'bg-blue-200 bg-opacity-70':helpMSHow}" @click="menuMShow = true">
-          <span v-show="helpMSHow" class="text-sm">Open menu</span>
-        </div>
-      </div>
-      <div class="flex w-screen h-1/2">
-        <div class="w-1/3 h-full flex items-center justify-center"
-          :class="{'bg-red-200 bg-opacity-70':helpMSHow}" @click="previousPage">
-          <span v-show="helpMSHow">Previous chapter</span>
-        </div>
-        <div class="w-1/3 h-full flex items-center justify-center"
-          :class="{'bg-blue-200 bg-opacity-70':helpMSHow}" @click="menuMShow = true">
-        </div>
-        <div class="w-1/3 h-full flex items-center justify-center"
-          :class="{'bg-green-200 bg-opacity-70':helpMSHow}" @click="nextPage">
-          <span v-show="helpMSHow">Next chapter</span>
-        </div>
-      </div>
-    </div>
-    <TocMobile v-model="tocMShow" :bookId="bookId" :chapterId="chapterId"/>
-    <ReaderMenuMobile v-model="menuMShow" :bookInfo="bookInfo" @showHelp="(v) => helpMSHow=v"/>
+    <MobileActionOverlay v-if="isMobile()" v-model:helpShow="helpShow" v-model:menuShow="menuShow" @nextPage="nextPage" @previousPage="previousPage"/>
+    <ActionOverlay v-else v-model:helpShow="helpShow" v-model:menuShow="menuShow" @nextPage="nextPage" @previousPage="previousPage"/>
+    <TocMobile v-model="tocShow" :bookId="bookId" :chapterId="chapterId"/>
+    <ReaderMenuMobile v-model="menuShow" :bookInfo="bookInfo" @showHelp="(v) => helpShow=v"/>
   </div>
 </template>
 <script setup>
@@ -40,14 +17,16 @@ import { ElMessage } from 'element-plus';
 import { isMobile } from '@/utils';
 import TocMobile from '@/components/TocMobile.vue';
 import ReaderMenuMobile from '@/components/ReaderMenuMobile.vue';
+import MobileActionOverlay from '@/components/MobileActionOverlay.vue';
+import ActionOverlay from "@/components/ActionOverlay.vue"
 
 const props = defineProps({
   bookId: { type: String, default: "" },
   chapterId: { type: String, default: "" },
 })
-const helpMSHow = ref(false)
-const tocMShow = ref(false)
-const menuMShow = ref(false)
+const helpShow = ref(false)
+const tocShow = ref(false)
+const menuShow = ref(false)
 const loading = ref(false)
 const chapterInfo = ref({})
 const content = ref("")
