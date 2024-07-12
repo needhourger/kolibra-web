@@ -7,7 +7,7 @@
       </div>
       <div class="w-4/5 h-full">
         <div class="w-full h-1/6 flex items-center justify-center" :class="{ 'bg-pink-200 bg-opacity-70': helpShow }"
-          @click="tocMShow = true">
+          @click="tocShow = true">
           <span v-show="helpShow" class="text-sm">Open chapter list</span>
         </div>
         <div class="w-full h-5/6 flex items-center justify-center" :class="{ 'bg-blue-200 bg-opacity-70': helpShow }"
@@ -25,6 +25,7 @@
 <script setup>
 const helpShow = defineModel("helpShow")
 const menuShow = defineModel("menuShow")
+const tocShow = defineModel("tocShow")
 const emits = defineEmits(["nextPage", "previousPage"])
 </script>
 <style lang="scss" scoped></style>

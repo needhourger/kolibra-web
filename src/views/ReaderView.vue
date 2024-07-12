@@ -2,8 +2,18 @@
   <div :class="isMobile() ? 'container-mb' : 'container'" v-loading="loading">
     <div v-html="contentHtml"
       :class="isMobile()?'content-mb':'content'" ref="contentRef"></div>
-    <MobileActionOverlay v-if="isMobile()" v-model:helpShow="helpShow" v-model:menuShow="menuShow" @nextPage="nextPage" @previousPage="previousPage"/>
-    <ActionOverlay v-else v-model:helpShow="helpShow" v-model:menuShow="menuShow" @nextPage="nextPage" @previousPage="previousPage"/>
+    <MobileActionOverlay v-if="isMobile()"
+      v-model:helpShow="helpShow"
+      v-model:menuShow="menuShow"
+      v-model:tocShow="tocShow"
+      @nextPage="nextPage"
+      @previousPage="previousPage"/>
+    <ActionOverlay v-else
+      v-model:helpShow="helpShow"
+      v-model:menuShow="menuShow"
+      v-model:tocShow="tocShow"
+      @nextPage="nextPage"
+      @previousPage="previousPage"/>
     <TocMobile v-model="tocShow" :bookId="bookId" :chapterId="chapterId"/>
     <ReaderMenuMobile v-model="menuShow" :bookInfo="bookInfo" @showHelp="(v) => helpShow=v"/>
   </div>
