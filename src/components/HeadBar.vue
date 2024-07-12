@@ -18,11 +18,12 @@
 <script setup>
 import { requestScanLibrary } from '@/api';
 import { useLoading } from '@/stores/loading.js'
-import { Refresh } from "@element-plus/icons-vue"
+import { ElMessage } from 'element-plus';
 const loadStore = useLoading()
 const handleScan = () => {
   requestScanLibrary().then(res => {
     console.log(res)
+    ElMessage.success("Request scanning successfully. Please refresh bookshelf later.")
   })
 }
 </script>
