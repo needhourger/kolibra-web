@@ -31,7 +31,7 @@ const handleScan = () => {
   .title {
     font-family: 'Silkscreen';
     font-size: 42px;
-    font-weight: 600;
+    font-weight: 700;
   }
 }
 </style>
